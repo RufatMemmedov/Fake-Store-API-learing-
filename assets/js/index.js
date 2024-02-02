@@ -10,6 +10,9 @@ async function apiLink() {
         const  frontdanGelenler = await infolar.json()
         
         for (let i = 0; i<= 30; i++){
+            const qisaMetn = frontdanGelenler[i].description.slice(0, 60);
+            const uzunMetn = frontdanGelenler[i].description
+
             bloglarDivi.innerHTML += `
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card-1 border-0 rounded border border-secondary p-3">
@@ -19,12 +22,17 @@ async function apiLink() {
                     <div class="card-bottom">
                         <h5 class="card-title">${frontdanGelenler[i].title}</h5>
                         <p class="card-text">${frontdanGelenler[i].category}</p>
-                        <p class="card-text">${frontdanGelenler[i].description}</p>
+                        <p class="card-text" >
+                        ${qisaMetn}
+                        <span id="readMore${i}" style="display:none"> ${uzunMetn}</span>
+                        <a href="#" onclick="toggleReadMore(${i})" class="read-more-btn">Read More</a>
+                        </p>
                         <a href="#" class="btn btn-primary">${frontdanGelenler[i].price} $</a>
                    
                     </div>
                 </div>
             </div>`
+        
         }
     }
     catch (xeta) {
@@ -37,6 +45,11 @@ async function apiLink() {
     finally {
 
     }
+    function toggleReadMore(goster) {
+        const readMoreElement = document.getElementById(`readMore${goster}`);
+        readMoreElement.style.display = readMoreElement.style.display === 'none' ? 'inline' : 'none';
+    }
+    
 }
 
 
